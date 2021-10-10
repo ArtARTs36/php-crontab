@@ -27,4 +27,9 @@ interface CrontabInterface
      * Remove task of crontab
      */
     public function remove(Task $task): void;
+
+    /**
+     * @param array<Task> $tasks
+     */
+    public function set(array $tasks): void;
 }

@@ -72,6 +72,14 @@ abstract class AbstractCrontab implements CrontabInterface
         $this->doSave($list);
     }
 
+    /**
+     * @param array<Task> $tasks
+     */
+    public function set(array $tasks): void
+    {
+        $this->doSave($tasks);
+    }
+
     public function removeAll(): void
     {
         $this->makeCommand()->addCutOption('r')->executeOrFail($this->executor);
