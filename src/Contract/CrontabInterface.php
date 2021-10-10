@@ -14,8 +14,9 @@ interface CrontabInterface
 
     /**
      * Add Task to crontab
+     * @param Task|array<Task> $task
      */
-    public function add(Task $task): void;
+    public function add($task): void;
 
     /**
      * Remove all tasks of crontab

@@ -64,10 +64,10 @@ abstract class AbstractCrontab implements CrontabInterface
             });
     }
 
-    public function add(Task $task): void
+    public function add($task): void
     {
         $list = $this->getAll();
-        $list[] = $task;
+        array_push($list, ...(is_array($task) ? $task : [$task]));
 
         $this->doSave($list);
     }
