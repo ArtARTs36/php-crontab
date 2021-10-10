@@ -1,0 +1,31 @@
+{
+    "name": "artarts36/crontab",
+    "type": "library",
+    "description": "Crontab",
+    "require": {
+        "artarts36/shell-command": "^2.1",
+        "artarts36/file-system-contracts": "^0.2.0",
+        "artarts36/local-file-system": "^0.1.0",
+        "artarts36/str": "^2.0.2"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ArtARTs36",
+            "email": "temicska99@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ArtARTs36\\Crontab\\": "src/"
+        }
+    },
+    "scripts": {
+        "lint": [
+            "./vendor/bin/phpcs --standard=PSR2 src"
+        ]
+    }
+}
