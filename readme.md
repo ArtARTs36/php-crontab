@@ -1,3 +1,3 @@
 ## Installation
 
-Run command: `artarts36/crontab`
+Run command: `composer require artarts36/crontab`
