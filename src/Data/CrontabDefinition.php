@@ -39,4 +39,20 @@ class CrontabDefinition implements \Countable, \IteratorAggregate
     {
         return $this->tasks;
     }
+
+    public function asFile(): string
+    {
+        return implode("\n", array_map(function (Task $task) {
+            return $task->expression . ' ' . $task->commandLine;
+        }, $this->tasks));
+    }
+
+    public function add(array $tasks): self
+    {
+        $existsTasks = $this->tasks;
+
+        array_push($existsTasks, ...$tasks);
+
+        return new self($existsTasks);
+    }
 }

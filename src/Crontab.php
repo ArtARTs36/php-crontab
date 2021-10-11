@@ -8,7 +8,6 @@ use ArtARTs36\Crontab\Contract\TaskSaverInterface;
 use ArtARTs36\Crontab\Data\CrontabDefinition;
 use ArtARTs36\Crontab\Data\Task;
 use ArtARTs36\Crontab\Exception\CrontabForUserNotFoundException;
-use ArtARTs36\FileSystem\Contracts\FileSystem;
 use ArtARTs36\ShellCommand\Exceptions\UserExceptionTrigger;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandExecutor;
 use ArtARTs36\ShellCommand\Result\CommandResult;
@@ -63,17 +62,17 @@ final class Crontab implements CrontabInterface
 
     public function add($task): CrontabDefinition
     {
-        try {
-            $list = $this->getAll()->tasks();
-        } catch (CrontabForUserNotFoundException $exception) {
-            $list = [];
-        }
+        $task = is_array($task) ? $task : [$task];
 
-        array_push($list, ...(is_array($task) ? $task : [$task]));
+        try {
+            $list = $this->getAll()->add($task);
+        } catch (CrontabForUserNotFoundException $exception) {
+            $list = new CrontabDefinition($task);
+        }
 
         $this->saver->save($list);
 
-        return new CrontabDefinition($list);
+        return $list;
     }
 
     /**
@@ -81,9 +80,9 @@ final class Crontab implements CrontabInterface
      */
     public function set(array $tasks): CrontabDefinition
     {
-        $this->saver->save($tasks);
+        $this->saver->save($definition = new CrontabDefinition($tasks));
 
-        return new CrontabDefinition($tasks);
+        return $definition;
     }
 
     public function removeAll(): void
@@ -101,8 +100,6 @@ final class Crontab implements CrontabInterface
             }
         }
 
-        $this->saver->save($newTasks);
-
-        return new CrontabDefinition($newTasks);
+        return $this->set($newTasks);
     }
 }

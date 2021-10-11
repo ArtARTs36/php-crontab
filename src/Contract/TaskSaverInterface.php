@@ -2,12 +2,9 @@
 
 namespace ArtARTs36\Crontab\Contract;
 
-use ArtARTs36\Crontab\Data\Task;
+use ArtARTs36\Crontab\Data\CrontabDefinition;
 
 interface TaskSaverInterface
 {
-    /**
-     * @param array<Task> $tasks
-     */
-    public function save(array $tasks): void;
+    public function save(CrontabDefinition $definition): void;
 }
