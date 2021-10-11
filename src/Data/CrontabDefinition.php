@@ -2,7 +2,7 @@
 
 namespace ArtARTs36\Crontab\Data;
 
-class CrontabDefinition implements \IteratorAggregate
+class CrontabDefinition implements \Countable, \IteratorAggregate
 {
     protected $tasks;
 
@@ -25,5 +25,18 @@ class CrontabDefinition implements \IteratorAggregate
     public function getIterator(): iterable
     {
         return new \ArrayIterator($this->tasks);
+    }
+
+    public function count(): int
+    {
+        return count($this->tasks);
+    }
+
+    /**
+     * @return Task[]
+     */
+    public function tasks(): array
+    {
+        return $this->tasks;
     }
 }
