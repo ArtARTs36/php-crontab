@@ -3,6 +3,7 @@
 namespace ArtARTs36\Crontab;
 
 use ArtARTs36\Crontab\Contract\CrontabInterface;
+use ArtARTs36\Crontab\Data\CrontabDefinition;
 use ArtARTs36\Crontab\Data\Task;
 use ArtARTs36\Crontab\Exception\CrontabForUserNotFoundException;
 use ArtARTs36\FileSystem\Contracts\FileSystem;
@@ -33,12 +34,9 @@ abstract class AbstractCrontab implements CrontabInterface
         $this->files = $files;
     }
 
-    /**
-     * @return array<Task>
-     */
-    public function getAll(): array
+    public function getAll(): CrontabDefinition
     {
-        return $this
+        return new CrontabDefinition($this
             ->makeCommand()
             ->addCutOption('l')
             ->setExceptionTrigger(UserExceptionTrigger::fromCallbacks([
@@ -61,10 +59,10 @@ abstract class AbstractCrontab implements CrontabInterface
                 $commandLine = $parts->slice(5)->implode(' ');
 
                 return new Task($expression, $commandLine);
-            });
+            }));
     }
 
-    public function add($task): void
+    public function add($task): CrontabDefinition
     {
         try {
             $list = $this->getAll();
@@ -75,14 +73,18 @@ abstract class AbstractCrontab implements CrontabInterface
         array_push($list, ...(is_array($task) ? $task : [$task]));
 
         $this->doSave($list);
+
+        return new CrontabDefinition($list);
     }
 
     /**
      * @param array<Task> $tasks
      */
-    public function set(array $tasks): void
+    public function set(array $tasks): CrontabDefinition
     {
         $this->doSave($tasks);
+
+        return new CrontabDefinition($tasks);
     }
 
     public function removeAll(): void
@@ -90,7 +92,7 @@ abstract class AbstractCrontab implements CrontabInterface
         $this->makeCommand()->addCutOption('r')->executeOrFail($this->executor);
     }
 
-    public function remove(Task $task): void
+    public function remove(Task $task): CrontabDefinition
     {
         $newTasks = [];
 
@@ -101,6 +103,8 @@ abstract class AbstractCrontab implements CrontabInterface
         }
 
         $this->doSave($newTasks);
+
+        return new CrontabDefinition($newTasks);
     }
 
     protected function doSave(array $tasks): void

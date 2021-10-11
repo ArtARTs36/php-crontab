@@ -2,21 +2,21 @@
 
 namespace ArtARTs36\Crontab\Contract;
 
+use ArtARTs36\Crontab\Data\CrontabDefinition;
 use ArtARTs36\Crontab\Data\Task;
 
 interface CrontabInterface
 {
     /**
      * Get all Tasks from crontab
-     * @return array<Task>
      */
-    public function getAll(): array;
+    public function getAll(): CrontabDefinition;
 
     /**
      * Add Task to crontab
      * @param Task|array<Task> $task
      */
-    public function add($task): void;
+    public function add($task): CrontabDefinition;
 
     /**
      * Remove all tasks of crontab
@@ -26,10 +26,10 @@ interface CrontabInterface
     /**
      * Remove task of crontab
      */
-    public function remove(Task $task): void;
+    public function remove(Task $task): CrontabDefinition;
 
     /**
      * @param array<Task> $tasks
      */
-    public function set(array $tasks): void;
+    public function set(array $tasks): CrontabDefinition;
 }
