@@ -66,7 +66,12 @@ abstract class AbstractCrontab implements CrontabInterface
 
     public function add($task): void
     {
-        $list = $this->getAll();
+        try {
+            $list = $this->getAll();
+        } catch (CrontabForUserNotFoundException $exception) {
+            $list = [];
+        }
+
         array_push($list, ...(is_array($task) ? $task : [$task]));
 
         $this->doSave($list);

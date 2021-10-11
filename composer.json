@@ -6,7 +6,8 @@
         "artarts36/shell-command": "^2.1",
         "artarts36/file-system-contracts": "^0.2.0",
         "artarts36/local-file-system": "^0.1.0",
-        "artarts36/str": "^2.0.2"
+        "artarts36/str": "^2.0.2",
+        "php": "^7.2 | ^8.0"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*"
