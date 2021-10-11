@@ -3,9 +3,7 @@
 namespace ArtARTs36\Crontab\Commander;
 
 use ArtARTs36\Crontab\Contract\CrontabCommanderInterface;
-use ArtARTs36\ShellCommand\Exceptions\UserExceptionTrigger;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandInterface;
-use ArtARTs36\ShellCommand\Result\CommandResult;
 use ArtARTs36\ShellCommand\ShellCommand;
 
 class UserCrontabCommander implements CrontabCommanderInterface
